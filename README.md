@@ -2,7 +2,7 @@
 
 An iOS weather app built with SwiftUI that shows current conditions and multi-day forecasts based on the user's location or a manually searched city — with offline fallback backed by Core Data, and a persistent multi-city dashboard on a map.
 
-Built for [course/assignment name] as a demonstration of MVVM architecture, REST API integration, on-device persistence, and CoreLocation/MapKit usage in a real-world iOS app.
+Built for IOS as a demonstration of MVVM architecture, REST API integration, on-device persistence, and CoreLocation/MapKit usage in a real-world iOS app.
 
 ---
 
