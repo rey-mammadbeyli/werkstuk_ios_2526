@@ -7,7 +7,7 @@ struct WeatherifyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            RootTabView()
                 .environmentObject(viewModel)
                 .environment(\.managedObjectContext, persistenceController.context)
         }
