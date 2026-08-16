@@ -83,6 +83,26 @@ final class PersistenceController {
         request.fetchLimit = 1
         return (try? context.fetch(request))?.first.map(map)
     }
+    
+    /// All cached cities, most recently updated first. Powers the Cities tab.
+        func allCachedWeather() -> [WeatherDisplayData] {
+            let request: NSFetchRequest<CachedWeather> = CachedWeather.fetchRequest()
+            request.sortDescriptors = [NSSortDescriptor(key: "lastUpdated", ascending: false)]
+            return ((try? context.fetch(request)) ?? []).map(map)
+        }
+    
+    
+    // Removes a cached city entirely (used when the user deletes it from the Cities list).
+        func deleteWeather(forCity city: String) {
+            let request: NSFetchRequest<CachedWeather> = CachedWeather.fetchRequest()
+            request.predicate = NSPredicate(format: "cityName ==[c] %@", city)
+            if let results = try? context.fetch(request) {
+                results.forEach(context.delete)
+                try? context.save()
+            }
+        }
+    
+    
 
     private func map(_ cached: CachedWeather) -> WeatherDisplayData {
         WeatherDisplayData(

@@ -17,7 +17,12 @@ final class WeatherViewModel: ObservableObject {
 
     // Search screen
     @Published var searchResults: WeatherDisplayData?
+    @Published var savedCities: [WeatherDisplayData] = []
+    @Published var fullForecast: [ForecastResponse.ForecastEntry] = []
 
+    var dailyForecast: [DailyForecast] {
+            DailyForecast.group(from: fullForecast)
+    }
     private let weatherService = WeatherService.shared
     private let persistence = PersistenceController.shared
     let locationManager = LocationManager()
@@ -42,6 +47,7 @@ final class WeatherViewModel: ObservableObject {
             .store(in: &cancellables)
 
         loadCachedWeatherIfNeeded()
+        loadSavedCities()
     }
 
 
@@ -85,6 +91,7 @@ final class WeatherViewModel: ObservableObject {
             lastUpdated = data.lastUpdated
             isOffline = false
             persistence.saveWeather(data, isCurrentLocation: true)
+            loadSavedCities()
             await loadForecast(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         } catch {
             handleFailure(error: error, fallbackCity: nil)
@@ -115,6 +122,7 @@ final class WeatherViewModel: ObservableObject {
             searchResults = data
             isOffline = false
             persistence.saveWeather(data, isCurrentLocation: false)
+            loadSavedCities()
             await loadForecast(latitude: data.latitude, longitude: data.longitude)
         } catch {
             handleFailure(error: error, fallbackCity: trimmed)
@@ -130,15 +138,14 @@ final class WeatherViewModel: ObservableObject {
 
 
     private func loadForecast(latitude: Double, longitude: Double) async {
-        do {
-            let response = try await weatherService.fetchForecast(latitude: latitude, longitude: longitude)
-            forecast = Array(response.list.prefix(8)) // next ~24h in 3h steps
-        } catch {
-            // The forecast chart is a "nice to have" — a failure here should
-            // not disrupt the primary current-weather flow.
-            print("Failed to load forecast: \(error)")
+            do {
+                let response = try await weatherService.fetchForecast(latitude: latitude, longitude: longitude)
+                fullForecast = response.list
+                forecast = Array(response.list.prefix(8)) // next ~24h in 3h steps
+            } catch {
+                print("Failed to load forecast: \(error)")
+            }
         }
-    }
 
 
     private func handleFailure(error: Error, fallbackCity: String?) {
@@ -155,4 +162,14 @@ final class WeatherViewModel: ObservableObject {
 
         errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
     }
+    
+
+        func loadSavedCities() {
+            savedCities = persistence.allCachedWeather()
+        }
+
+        func deleteCity(_ city: WeatherDisplayData) {
+            persistence.deleteWeather(forCity: city.cityName)
+            loadSavedCities()
+        }
 }

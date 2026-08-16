@@ -31,7 +31,7 @@ struct DetailView: View {
                     Divider()
                     DetailRow(icon: "gauge", title: "Pressure", value: "\(weather.pressure) hPa")
                     Divider()
-                    DetailRow(icon: "wind", title: "Wind speed", value: "\(weather.windSpeed, specifier: "%.1f") m/s")
+                    DetailRow(icon: "wind", title: "Wind speed", value: String(format: "%.1f m/s", weather.windSpeed))
                     Divider()
                     DetailRow(icon: "location.fill", title: "Coordinates", value: String(format: "%.2f, %.2f", weather.latitude, weather.longitude))
                 }
