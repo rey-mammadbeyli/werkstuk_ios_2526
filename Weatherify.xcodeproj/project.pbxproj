@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B90806BA3031D65A00F4168D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B90806B93031D65A00F4168D /* Alamofire */; };
+		B90806BC3031D65A00F4168D /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B90806BB3031D65A00F4168D /* AlamofireDynamic */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B908067930313F3600F4168D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B90806BA3031D65A00F4168D /* Alamofire in Frameworks */,
+				B90806BC3031D65A00F4168D /* AlamofireDynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +119,8 @@
 			);
 			name = Weatherify;
 			packageProductDependencies = (
+				B90806B93031D65A00F4168D /* Alamofire */,
+				B90806BB3031D65A00F4168D /* AlamofireDynamic */,
 			);
 			productName = Weatherify;
 			productReference = B908066630313F3500F4168D /* Weatherify.app */;
@@ -195,6 +204,9 @@
 			);
 			mainGroup = B908065D30313F3500F4168D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B90806B83031D65A00F4168D /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B908066730313F3500F4168D /* Products */;
 			projectDirPath = "";
@@ -550,6 +562,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B90806B83031D65A00F4168D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.12.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B90806B93031D65A00F4168D /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B90806B83031D65A00F4168D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		B90806BB3031D65A00F4168D /* AlamofireDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B90806B83031D65A00F4168D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = AlamofireDynamic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B908065E30313F3500F4168D /* Project object */;
 }
